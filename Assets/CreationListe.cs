@@ -12,7 +12,7 @@ namespace ListeDeCourse
         public ScrollRect previewListe;
         public Text Txtprefab;
         public Button Btnprefab;
-        public ListeCourse listeValidee;
+        //public ListeCourse listeValidee;
 
         void Start()
         {
@@ -33,10 +33,9 @@ namespace ListeDeCourse
             newArticle = (Text)Instantiate(Txtprefab, transform);
 
             newBtnDel = (Button)Instantiate(Btnprefab, transform);
-            newBtnDel.onClick.AddListener(delegate {Destroy(newArticle.gameObject); Destroy(newBtnDel.gameObject); listeValidee.liste.Remove(newArticle.text);});
+            newBtnDel.onClick.AddListener(delegate {Destroy(newArticle.gameObject); Destroy(newBtnDel.gameObject);});
 
             newArticle.text =  article.text;
-            listeValidee.liste.Add(article.text);
         }
 
     }
