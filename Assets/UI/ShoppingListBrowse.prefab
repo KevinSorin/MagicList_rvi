@@ -758,7 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BrowseItemType: {fileID: 3741772343547433457, guid: e1c4d3e5b7a9ed3468999b88bd691aee, type: 3}
   txtSearch: {fileID: 8375430271493236825}
-  btnResetSearch: {fileID: 0}
+  btnSearchReset: {fileID: 315197592982029663}
   grid: {fileID: 8983440096513580541}
 --- !u!1 &6341822870184055035
 GameObject:
@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 8400573842749068184}
   - component: {fileID: 315197592982029663}
   m_Layer: 5
-  m_Name: btnCancelSearch
+  m_Name: btnSearchReset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

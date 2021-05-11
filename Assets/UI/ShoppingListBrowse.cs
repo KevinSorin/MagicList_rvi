@@ -9,7 +9,7 @@ public class ShoppingListBrowse : MonoBehaviour
     public GameObject BrowseItemType;
 
     public InputField txtSearch;
-    public Button btnResetSearch;
+    public Button btnSearchReset;
 
     public GameObject grid;
 
@@ -18,6 +18,8 @@ public class ShoppingListBrowse : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        btnSearchReset.onClick.AddListener(OnBtnSearchResetClicked);
+
         connectDataSource();
     }
 
@@ -35,6 +37,7 @@ public class ShoppingListBrowse : MonoBehaviour
             addShoppingList(sl);
         }
     }
+
     private void ShoppingLists_ListChanged(object sender, ListChangedEventArgs e)
     {
         if (e.ListChangedType == ListChangedType.ItemAdded)
@@ -51,5 +54,10 @@ public class ShoppingListBrowse : MonoBehaviour
 
         ShoppingListBrowseItem item = objectInstance.GetComponent("ShoppingListBrowseItem") as ShoppingListBrowseItem;
         item.ShoppingListObject = sl;
+    }
+
+    private void OnBtnSearchResetClicked()
+    {
+        this.txtSearch.text = "";
     }
 }
