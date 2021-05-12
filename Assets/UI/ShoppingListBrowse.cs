@@ -47,5 +47,6 @@ public class ShoppingListBrowse : MonoBehaviour
 
         ShoppingListBrowseItem item = objectInstance.GetComponent("ShoppingListBrowseItem") as ShoppingListBrowseItem;
         item.ShoppingList = sl;
+        items.Add(item);
     }
 }
