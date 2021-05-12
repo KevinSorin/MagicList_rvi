@@ -62,7 +62,6 @@ public class PlacementAndLaunchingCanvasController : MonoBehaviour
 	
     void Update()
     {
-		Debug.Log("Button is " + (ButtonPressed ? "pressed" : "not pressed"));
 		// if we got a hit meaning that it was selected
 		if (ButtonPressed)
 		{

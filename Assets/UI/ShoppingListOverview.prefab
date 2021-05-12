@@ -123,7 +123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.0099487305}
   m_SizeDelta: {x: 0, y: -80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &3982080488123792900
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3156712883031084325}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999897
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -677,7 +677,6 @@ GameObject:
   - component: {fileID: 7292419054685513067}
   - component: {fileID: 4947589969795112670}
   - component: {fileID: -7450024679154030218}
-  - component: {fileID: -446596592320372985}
   m_Layer: 5
   m_Name: ShoppingListOverview
   m_TagString: Untagged
@@ -791,18 +790,6 @@ MonoBehaviour:
   BrowseItemType: {fileID: 2875981810011905495, guid: df44bcf71ada8d440ab03053788a4f57, type: 3}
   grid: {fileID: 603820586616744244}
   items: []
---- !u!114 &-446596592320372985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8197843577605382602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c2a243abd0e1643bed3d7fa230671e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8635019084431235911
 GameObject:
   m_ObjectHideFlags: 0

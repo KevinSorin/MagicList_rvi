@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +10,10 @@ public class ShoppingListManage : MonoBehaviour
     public InputField txtName;
     public ShoppingArticleBrowse grid;
     public Button btnScan;
+    public Button btnAdd;
+    public ShoppingReferenceBrowse referenceSelector;
 
-    private ShoppingList shoppingList = null;
-
+    private ShoppingList shoppingList;
     public ShoppingList ShoppingList
     {
         get
@@ -27,6 +30,13 @@ public class ShoppingListManage : MonoBehaviour
                 this.grid.clearArticles();
                 foreach (ShoppingArticle sa in this.shoppingList.articles)
                     this.grid.addArticle(sa);
+
+                this.shoppingList.articles.ListChanged += (o, ea) => {
+                    if (ea.ListChangedType == ListChangedType.ItemAdded)
+                    {
+                        this.grid.addArticle(this.shoppingList.articles[ea.NewIndex]);
+                    }
+                };
             }
         }
     }
@@ -35,6 +45,14 @@ public class ShoppingListManage : MonoBehaviour
     void Start()
     {
         txtName.onValueChanged.AddListener(delegate { this.shoppingList.Name = this.txtName.text; });
+        
+        btnAdd.onClick.AddListener(delegate {
+            this.referenceSelector.gameObject.SetActive(true); 
+            this.referenceSelector.transform.SetAsLastSibling(); 
+        });
+
+        referenceSelector.ReferenceSelected += referenceSelector_ReferenceSelected;
+        
         btnScan.onClick.AddListener(MenuNavigation.ToScan);
     }
 
@@ -42,5 +60,13 @@ public class ShoppingListManage : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void referenceSelector_ReferenceSelected(object sender, EventArgs e)
+    {
+        ShoppingArticle sa = new ShoppingArticle((e as ReferenceEventArgs).Item);
+        this.ShoppingList.articles.Add(sa);
+
+        this.referenceSelector.gameObject.SetActive(false);
     }
 }

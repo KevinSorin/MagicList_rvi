@@ -19,7 +19,12 @@ public class ShoppingReferenceBrowseItem : MonoBehaviour
         }
         set
         {
+            if(this.shoppingReference != value && value != null)
+            {
+                this.shoppingReference = value;
 
+                this.lblName.text = this.shoppingReference.name;
+            }
         }
     }
 

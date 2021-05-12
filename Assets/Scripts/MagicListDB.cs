@@ -9,9 +9,9 @@ public class MagicListDB : MonoBehaviour
     public static BindingList<ShoppingList> shoppingLists = new BindingList<ShoppingList>();
     public static List<ShoppingReference> shoppingReferences = new List<ShoppingReference>()
     {
-        new ShoppingReference("Orange", "orange"),
-        new ShoppingReference("Pastis", "pastis"),
-        new ShoppingReference("Tofu", "tofu")
+        new ShoppingReference("Orange", "orange", "orange.jpg"),
+        new ShoppingReference("Pastis", "pastis", "pastis.jpg"),
+        new ShoppingReference("Tofu", "tofu", "tofu.jpg")
     };
 
     void Awake()
