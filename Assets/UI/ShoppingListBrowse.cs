@@ -6,21 +6,24 @@ using UnityEngine.UI;
 
 public class ShoppingListBrowse : MonoBehaviour
 {
+    //Header
+    public Button btnNew;
+
+    //Grid
     public GameObject BrowseItemType;
-
-    public InputField txtSearch;
-    public Button btnSearchReset;
-
     public GameObject grid;
-
-    List<GameObject> items = new List<GameObject>();
+    List<ShoppingListBrowseItem> items = new List<ShoppingListBrowseItem>();
 
     // Start is called before the first frame update
     void Start()
     {
-        btnSearchReset.onClick.AddListener(OnBtnSearchResetClicked);
+        btnNew.onClick.AddListener(MenuNavigation.ToListCreate);
 
-        connectDataSource();
+        MagicListDB.shoppingLists.ListChanged += ShoppingLists_ListChanged;
+        foreach (ShoppingList sl in MagicListDB.shoppingLists)
+        {
+            addShoppingList(sl);
+        }
     }
 
     // Update is called once per frame
@@ -29,21 +32,11 @@ public class ShoppingListBrowse : MonoBehaviour
 
     }
 
-    void connectDataSource()
-    {
-        MagicListDB.shoppingLists.ListChanged += ShoppingLists_ListChanged;
-        foreach (ShoppingList sl in MagicListDB.shoppingLists)
-        {
-            addShoppingList(sl);
-        }
-    }
-
     private void ShoppingLists_ListChanged(object sender, ListChangedEventArgs e)
     {
         if (e.ListChangedType == ListChangedType.ItemAdded)
         {
-            ShoppingList sl = MagicListDB.shoppingLists[e.NewIndex];
-            addShoppingList(sl);
+            addShoppingList(MagicListDB.shoppingLists[e.NewIndex]);
         }
     }
 
@@ -53,11 +46,6 @@ public class ShoppingListBrowse : MonoBehaviour
         objectInstance.transform.SetParent(this.grid.transform, false);
 
         ShoppingListBrowseItem item = objectInstance.GetComponent("ShoppingListBrowseItem") as ShoppingListBrowseItem;
-        item.ShoppingListObject = sl;
-    }
-
-    private void OnBtnSearchResetClicked()
-    {
-        this.txtSearch.text = "";
+        item.ShoppingList = sl;
     }
 }

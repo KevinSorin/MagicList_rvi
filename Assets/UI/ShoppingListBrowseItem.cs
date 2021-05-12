@@ -12,7 +12,7 @@ public class ShoppingListBrowseItem : MonoBehaviour
     public Button btnDelete;
     public Button btnRun;
 
-    public ShoppingList ShoppingListObject
+    public ShoppingList ShoppingList
     {
         get
         {
@@ -23,29 +23,21 @@ public class ShoppingListBrowseItem : MonoBehaviour
             if(this.shoppingList != value)
             {
                 this.shoppingList = value;
-                this.lblTitle.text = this.shoppingList.name;
-                this.shoppingList.Deleted += (o, ea) => OnListDeleted();
+                this.lblTitle.text = this.shoppingList.Name;
+
+                this.shoppingList.NameChanged += (o, ea) => { this.lblTitle.text = this.shoppingList.Name; };
+                this.shoppingList.Deleted += (o, ea) => { Destroy(this.gameObject); };
             }
         }
     }
 
-    void OnListDeleted()
-    {
-        Destroy(this.gameObject);
-    }
-
-    void OnBtnDeleteClicked()
-    {
-        this.shoppingList.delete();
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
-        btnDelete.onClick.AddListener(OnBtnDeleteClicked);
+        btnEdit.onClick.AddListener(delegate { MenuNavigation.ToListEdit(this.ShoppingList); });
+        btnDelete.onClick.AddListener(delegate { this.shoppingList.delete(); });
+        btnRun.onClick.AddListener(delegate { MenuNavigation.CurrentList = this.ShoppingList; MenuNavigation.ToScan(); });
     }
 
-    // Update is called once per frame
     void Update()
     {
 

@@ -12,7 +12,9 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.btnNewList.onClick.AddListener(MenuNavigation.ToListCreate);
+        this.btnBrowseList.onClick.AddListener(MenuNavigation.ToListBrowse);
+        this.btnScan.onClick.AddListener(MenuNavigation.ToScan);
     }
 
     // Update is called once per frame

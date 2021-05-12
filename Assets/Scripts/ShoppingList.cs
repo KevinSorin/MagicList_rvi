@@ -7,11 +7,12 @@ using System.Text.RegularExpressions;
 
 public class ShoppingList
 {
-    public string name = "New shopping list";
+    private string name = "New shopping list";
     public BindingList<ShoppingArticle> articles = new BindingList<ShoppingArticle>();
     private bool? isListCompleted = null;
     private bool closed = false;
 
+    public event EventHandler NameChanged;
     public event EventHandler ArticlesChanged;
     public event EventHandler ListCompletedChanged;
     public event EventHandler ClosedChanged;
@@ -31,6 +32,22 @@ public class ShoppingList
     public override string ToString()
     {
         return this.name;
+    }
+
+    public string Name
+    {
+        get
+        {
+            return this.name;
+        }
+        set
+        {
+            if(this.name != value)
+            {
+                this.name = value;
+                OnNameChanged(EventArgs.Empty);
+            }
+        }
     }
 
     private void updateIsListCompleted()
@@ -77,10 +94,17 @@ public class ShoppingList
         }
     }
 
+    protected virtual void OnNameChanged(EventArgs e)
+    {
+        if (this.NameChanged != null)
+            this.NameChanged(this, e);
+    }
+
     protected virtual void OnArticlesChanged(ListChangedEventArgs e)
     {
         if (e.ListChangedType == ListChangedType.ItemAdded)
         {
+            this.articles.ElementAt(e.NewIndex).Deleted += (o, ea) => this.articles.Remove(this.articles.ElementAt(e.NewIndex));
             this.articles.ElementAt(e.NewIndex).isQuantityReachedChanged += (o,ea) => updateIsListCompleted();
         }
 

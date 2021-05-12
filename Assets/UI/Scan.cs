@@ -83,6 +83,12 @@ public class Scan : MonoBehaviour
                     var result = _barcodeReader.Decode(imgSource);
                     if (result != null)
                     {
+                        
+                        PopupUI.Instance
+                            .SetTitle("Detection de QR Code")
+                            .SetMessage(result.Text)
+                            .OnClose(delegate { Debug.Log("Closed");})
+                            .Show();
                         Debug.Log("RECOGNIZED: " + result.Text);
                     }
                 }

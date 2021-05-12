@@ -1024,9 +1024,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63c7fb25dfe4484b81327b86b2adea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lblName: {fileID: 0}
-  nudQuantity: {fileID: 0}
-  btnDelete: {fileID: 0}
+  lblName: {fileID: 606204788514820981}
+  nudQuantity: {fileID: 5301155753458578252}
+  btnDelete: {fileID: 1641656219025945214}
+  btnMinus: {fileID: 4140621066206892918}
+  btnPlus: {fileID: 8959282044879704192}
 --- !u!1 &8590305167976931729
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,14 +7,26 @@ using UnityEngine;
 public class MagicListDB : MonoBehaviour
 {
     public static BindingList<ShoppingList> shoppingLists = new BindingList<ShoppingList>();
-    public static List<ShoppingReference> shoppingReferences = new List<ShoppingReference>();
+    public static List<ShoppingReference> shoppingReferences = new List<ShoppingReference>()
+    {
+        new ShoppingReference("Orange", "orange"),
+        new ShoppingReference("Pastis", "pastis"),
+        new ShoppingReference("Tofu", "tofu")
+    };
 
     void Awake()
     {
-        for (int i = 0; i < 10; i++)
-            shoppingLists.Add(new ShoppingList("test_" + i));
-
+        DontDestroyOnLoad(this);
         MagicListDB.shoppingLists.ListChanged += ShoppingLists_ListChanged;
+
+        for (int i = 0; i < 3; i++)
+        {
+            ShoppingList sl = new ShoppingList("test_" + i);
+            sl.articles.Add(new ShoppingArticle(MagicListDB.shoppingReferences[0], 3));
+            sl.articles.Add(new ShoppingArticle(MagicListDB.shoppingReferences[1], 1));
+            sl.articles.Add(new ShoppingArticle(MagicListDB.shoppingReferences[2], 2));
+            MagicListDB.shoppingLists.Add(sl);
+        }
     }
 
     private void ShoppingLists_ListChanged(object sender, ListChangedEventArgs e)

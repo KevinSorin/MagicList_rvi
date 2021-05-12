@@ -14,11 +14,18 @@ public class ShoppingArticle
     public event EventHandler BarCodesListChanged;
     public event EventHandler QuantityChanged;
     public event EventHandler isQuantityReachedChanged;
+    public event EventHandler Deleting;
+    public event EventHandler Deleted;
 
     public ShoppingArticle(ShoppingReference reference)
     {
         this.reference = reference;
         this.barCodes.ListChanged += (o, ea) => OnBarCodesListChanged(ea);
+    }
+
+    public ShoppingArticle(ShoppingReference reference, int quantity) : this(reference)
+    {
+        this.quantity = quantity;
     }
 
     public int Quantity
@@ -50,6 +57,17 @@ public class ShoppingArticle
         }
     }
 
+    public void delete()
+    {
+        DeleteEventArgs e = new DeleteEventArgs();
+        OnDeleting(e);
+
+        if (!e.Cancel)
+        {
+            OnDeleted(e);
+        }
+    }
+
     protected virtual void OnBarCodesListChanged(ListChangedEventArgs e)
     {
         if (e.ListChangedType == ListChangedType.ItemAdded)
@@ -76,5 +94,17 @@ public class ShoppingArticle
     {
         if (this.isQuantityReachedChanged != null)
             this.isQuantityReachedChanged(this, e);
+    }
+
+    protected virtual void OnDeleting(DeleteEventArgs e)
+    {
+        if (this.Deleting != null)
+            this.Deleting(this, e);
+    }
+
+    protected virtual void OnDeleted(DeleteEventArgs e)
+    {
+        if (this.Deleted != null)
+            this.Deleted(this, e);
     }
 }
