@@ -12,6 +12,59 @@ using ZXing.QrCode;
 
 public class Scan : MonoBehaviour
 {
+    #region BARCODE
+    private string barCode;
+    public string BarCode
+    {
+        get
+        {
+            return this.barCode;
+        }
+        set
+        {
+            if(this.barCode != value)
+            {
+                this.barCode = value;
+            }
+        }
+    }
+    #endregion
+
+    #region LEFT_PANEL
+    public GameObject panel;
+    public Button btnOpenClose;
+
+    public bool opened = false;
+
+    void OnBtnOpenCloseClicked()
+    {
+        if (opened)
+            CloseLeftPanel();
+        else
+            OpenLeftPanel();
+    }
+
+    public void OpenLeftPanel()
+    {
+        if (!opened)
+        {
+            panel.transform.position = panel.transform.position + new Vector3(540, 0, 0);
+            btnOpenClose.transform.position = btnOpenClose.transform.position + new Vector3(540, 0, 0);
+            opened = true;
+        }
+    }
+
+    public void CloseLeftPanel()
+    {
+        if(opened)
+        {
+            panel.transform.position = panel.transform.position + new Vector3(-540, 0, 0);
+            btnOpenClose.transform.position = btnOpenClose.transform.position + new Vector3(-540, 0, 0);
+            opened = false;
+        }
+    }
+    #endregion
+
     #region PRIVATE_MEMBERS
     private PIXEL_FORMAT mPixelFormat = PIXEL_FORMAT.UNKNOWN_FORMAT;
     private bool mAccessCameraImage = true;
@@ -32,6 +85,8 @@ public class Scan : MonoBehaviour
         VuforiaARController.Instance.RegisterVuforiaStartedCallback(OnVuforiaStarted);
         InvokeRepeating("OnTrackablesUpdated", 2f, 1f);
         VuforiaARController.Instance.RegisterOnPauseCallback(OnPause);
+
+        btnOpenClose.onClick.AddListener(OnBtnOpenCloseClicked);
     }
     #endregion // MONOBEHAVIOUR_METHODS
 
@@ -83,13 +138,14 @@ public class Scan : MonoBehaviour
                     var result = _barcodeReader.Decode(imgSource);
                     if (result != null)
                     {
-                        
-                        PopupUI.Instance
+
+                        /*PopupUI.Instance
                             .SetTitle("Detection de QR Code")
                             .SetMessage(result.Text)
                             .OnClose(delegate { Debug.Log("Closed");})
                             .Show();
-                        Debug.Log("RECOGNIZED: " + result.Text);
+                        Debug.Log("RECOGNIZED: " + result.Text);*/
+                        barCode = result.Text;
                     }
                 }
             }
@@ -139,4 +195,10 @@ public class Scan : MonoBehaviour
         mFormatRegistered = false;
     }
     #endregion //PRIVATE_METHODS
+
+    void Update()
+    {
+    }
+
+    public ShoppingListOverview shoppingListOverview;
 }

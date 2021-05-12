@@ -18,7 +18,6 @@ public class MenuNavigation : MonoBehaviour
     //Initialized
     public GameObject content;
 
-    public Button btnBack;
     public Button btnTitle;
 
     public MainMenu mainMenu;
@@ -53,7 +52,10 @@ public class MenuNavigation : MonoBehaviour
     }
 
     public static void ToMainMenu()
-    {        
+    {
+        MenuNavigation.Scan.CloseLeftPanel();
+        MenuNavigation.CurrentList = null;
+
         MenuNavigation.MainMenu.gameObject.SetActive(true);
         MenuNavigation.ListBrowse.gameObject.SetActive(false);
         MenuNavigation.ListManage.gameObject.SetActive(false);
@@ -62,6 +64,9 @@ public class MenuNavigation : MonoBehaviour
 
     public static void ToListBrowse()
     {
+        MenuNavigation.Scan.CloseLeftPanel();
+        MenuNavigation.CurrentList = null;
+
         MenuNavigation.MainMenu.gameObject.SetActive(false);
         MenuNavigation.ListBrowse.gameObject.SetActive(true);
         MenuNavigation.ListManage.gameObject.SetActive(false);
@@ -70,6 +75,8 @@ public class MenuNavigation : MonoBehaviour
 
     public static void ToListCreate()
     {
+        MenuNavigation.Scan.CloseLeftPanel();
+
         ShoppingList sl = new ShoppingList();
         MagicListDB.shoppingLists.Add(sl);
         MenuNavigation.CurrentList = sl;
@@ -83,6 +90,8 @@ public class MenuNavigation : MonoBehaviour
 
     public static void ToListEdit(ShoppingList sl)
     {
+        MenuNavigation.Scan.CloseLeftPanel();
+
         MenuNavigation.CurrentList = sl;
         MenuNavigation.ListManage.ShoppingList = MenuNavigation.CurrentList;
 
@@ -94,48 +103,15 @@ public class MenuNavigation : MonoBehaviour
 
     public static void ToScan()
     {
+        MenuNavigation.Scan.CloseLeftPanel();
+
+        MenuNavigation.Scan.panel.SetActive(MenuNavigation.CurrentList != null);
+        MenuNavigation.Scan.btnOpenClose.gameObject.SetActive(MenuNavigation.CurrentList != null);
+        MenuNavigation.Scan.shoppingListOverview.ShoppingList = MenuNavigation.CurrentList;
+
         MenuNavigation.MainMenu.gameObject.SetActive(false);
         MenuNavigation.ListBrowse.gameObject.SetActive(false);
         MenuNavigation.ListManage.gameObject.SetActive(false);
         MenuNavigation.Scan.gameObject.SetActive(true);
-    }
-
-    void FromMainMenuToListBrowse()
-    {
-        mainMenu.gameObject.SetActive(false);
-        listBrowse.gameObject.SetActive(true);
-        listManage.gameObject.SetActive(false);
-        scan.gameObject.SetActive(false);
-    }
-
-    void FromMainMenuToListCreate()
-    {
-        mainMenu.gameObject.SetActive(false);
-        listBrowse.gameObject.SetActive(false);
-        listManage.gameObject.SetActive(true);
-        scan.gameObject.SetActive(true);
-    }
-
-    void FromMainMenuToScan()
-    {
-        mainMenu.gameObject.SetActive(false);
-        listBrowse.gameObject.SetActive(false);
-        listManage.gameObject.SetActive(false);
-        scan.gameObject.SetActive(true);
-    }
-
-    void FromListBrowseToListEdit()
-    {
-
-    }
-
-    void FromListBrowseToListCreate()
-    {
-
-    }
-
-    void FromListCreateToListEdit()
-    {
-
     }
 }

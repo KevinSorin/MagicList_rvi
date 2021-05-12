@@ -105,7 +105,7 @@ public class ShoppingList
         if (e.ListChangedType == ListChangedType.ItemAdded)
         {
             this.articles.ElementAt(e.NewIndex).Deleted += (o, ea) => this.articles.Remove(this.articles.ElementAt(e.NewIndex));
-            this.articles.ElementAt(e.NewIndex).isQuantityReachedChanged += (o,ea) => updateIsListCompleted();
+            this.articles.ElementAt(e.NewIndex).IsQuantityReachedChanged += (o,ea) => updateIsListCompleted();
         }
 
         if (this.ArticlesChanged != null)

@@ -47,7 +47,7 @@ public class ShoppingArticleBrowse : MonoBehaviour
         foreach(ShoppingArticleBrowseItem item in items)
         {
             Destroy(item.gameObject);
-            this.items.Clear();
         }
+        this.items.Clear();
     }
 }

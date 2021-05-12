@@ -12,8 +12,9 @@ public class ShoppingArticle
     private int quantity = 1;
 
     public event EventHandler BarCodesListChanged;
+    public event EventHandler CurrentQuantityChanged;
     public event EventHandler QuantityChanged;
-    public event EventHandler isQuantityReachedChanged;
+    public event EventHandler IsQuantityReachedChanged;
     public event EventHandler Deleting;
     public event EventHandler Deleted;
 
@@ -26,6 +27,22 @@ public class ShoppingArticle
     public ShoppingArticle(ShoppingReference reference, int quantity) : this(reference)
     {
         this.quantity = quantity;
+    }
+
+    public string Name
+    {
+        get
+        {
+            return this.reference.name;
+        }
+    }
+
+    public int CurrentQuantity
+    {
+        get
+        {
+            return this.barCodes.Count;
+        }
     }
 
     public int Quantity
@@ -72,16 +89,24 @@ public class ShoppingArticle
     {
         if (e.ListChangedType == ListChangedType.ItemAdded)
         {
+            OnCurrentQuantityChanged(EventArgs.Empty);
             if (barCodes.Count - 1 < quantity && IsQuantityReached)
                 OnIsQuantityReachedChanged(EventArgs.Empty);
         }
         if (e.ListChangedType == ListChangedType.ItemDeleted)
         {
+            OnCurrentQuantityChanged(EventArgs.Empty);
             if (barCodes.Count + 1 >= quantity && !IsQuantityReached)
                 OnIsQuantityReachedChanged(EventArgs.Empty);
         }
         if (this.BarCodesListChanged != null)
             this.BarCodesListChanged(this, e);
+    }
+
+    protected virtual void OnCurrentQuantityChanged(EventArgs e)
+    {
+        if (this.CurrentQuantityChanged != null)
+            this.CurrentQuantityChanged(this, e);
     }
 
     protected virtual void OnQuantityChanged(EventArgs e)
@@ -92,8 +117,8 @@ public class ShoppingArticle
 
     protected virtual void OnIsQuantityReachedChanged(EventArgs e)
     {
-        if (this.isQuantityReachedChanged != null)
-            this.isQuantityReachedChanged(this, e);
+        if (this.IsQuantityReachedChanged != null)
+            this.IsQuantityReachedChanged(this, e);
     }
 
     protected virtual void OnDeleting(DeleteEventArgs e)
